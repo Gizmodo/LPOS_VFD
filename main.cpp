@@ -118,7 +118,7 @@ std::array<uint8_t, 3> Brightness(uint8_t brillo) {
 
 using namespace std;
 using namespace restbed;
-RobotControl::Al5dLowLevelDriver::SerialCommunicationHandler ss("/dev/pts/1");
+RobotControl::Al5dLowLevelDriver::SerialCommunicationHandler ss("/dev/ttyACM0");
 
 void post_method_handler(const shared_ptr<Session> session) {
     const auto request = session->get_request();
@@ -129,7 +129,7 @@ void post_method_handler(const shared_ptr<Session> session) {
         fprintf(stdout, "%.*s\n", (int) body.size(), body.data());
         auto buf = body.data();
         std::string s(reinterpret_cast<const char *>(buf));
-        ss.WriteLine(RobotControl::Al5dLowLevelDriver::Line::First, s);
+        ss.WriteLine(RobotControl::Al5dLowLevelDriver::Line::Second, s);
         session->close(OK, "Hello, World!", {{"Content-Length", "13"}});
     });
 }
@@ -150,7 +150,7 @@ int main() {
         //ss.setBlinkMode(RobotControl::Al5dLowLevelDriver::Suit::Blink);
         //ss.MoveCursorEnd();
         //  ss.WriteLine(RobotControl::Al5dLowLevelDriver::Line::First,"прстуфхцшщьыъэюя");
-        ss.WriteLine(RobotControl::Al5dLowLevelDriver::Line::First, "111");
+        ss.WriteLine(RobotControl::Al5dLowLevelDriver::Line::First, "222");
     }
     catch (boost::system::system_error &e) {
         std::cerr << "Ошибка открытия порта: " << e.what() << std::endl;
